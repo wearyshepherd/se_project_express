@@ -68,7 +68,7 @@ module.exports.deleteClothingItem = async (req, res) => {
     } else {
       res
         .status(err.statusCode || SERVER_ERROR)
-        .send({ message: err.message || "An error has occoured on the Server."});
+        .send({ message: err.message || "An error has occurred on the Server."});
     }
   }
 };
@@ -99,7 +99,7 @@ module.exports.likeItem = async (req, res) => {
     } else {
       res
         .status(err.statusCode || SERVER_ERROR)
-        .send({ message: err.message || "An error has occoured on the Server."});
+        .send({ message: err.message || "An error has occurred on the Server."});
     }
   }
 };
@@ -130,8 +130,7 @@ module.exports.dislikeItem = async (req, res) => {
     } else {
       res
         .status(err.statusCode || SERVER_ERROR)
-        .send({ message: err.message || "An error has occoured on the Server."});
+        .send({ message: err.message || "An error has occurred on the Server."});
     }
   }
 };
-
