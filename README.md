@@ -1,9 +1,39 @@
-# WTWR (What to Wear?): Back End
-The back-end project is focused on creating a server for the WTWR application. You’ll gain a deeper understanding of how to work with databases, set up security and testing, and deploy web applications on a remote machine. The eventual goal is to create a server with an API and user authorization.
-## Running the Project
-`npm run start` — to launch the server 
+# WTWR Backend
 
-`npm run dev` — to launch the server with the hot reload feature
+## Overview
+This project is the backend for the "WTWR" (What to Wear?) application. It uses Express for the server, MongoDB for data storage, and includes security measures with Helmet middleware.
 
-### Testing
-Before committing your code, make sure you edit the file `sprint.txt` in the root folder. The file `sprint.txt` should contain the number of the sprint you're currently working on. For ex. 12
+## Scripts
+- **Start Server**: `npm start`
+- **Development Mode**: `npm run dev`
+- **Linting**: `npm run lint`
+
+## Technologies
+- **Express.js**
+- **Helmet**
+- **MongoDB**
+- **Mongoose**
+- **Validator**
+
+## Setup
+1. Clone the repository.
+2. Install dependencies: `npm install`.
+3. Set up MongoDB connection.
+4. Run the server: `npm start` or `npm run dev`.
+
+## Dependencies
+- **express**
+- **helmet**
+- **mongoose**
+- **validator**
+
+## Dev Dependencies
+- **eslint**
+- **eslint-config-airbnb-base**
+- **eslint-config-prettier**
+- **eslint-plugin-import**
+- **nodemon**
+- **prettier**
+
+## Author
+- Carlos Chavez
