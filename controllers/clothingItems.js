@@ -1,5 +1,3 @@
-// Your main file
-
 const ClothingItems = require("../models/clothingItem");
 const {
   INVALID_DATA,
