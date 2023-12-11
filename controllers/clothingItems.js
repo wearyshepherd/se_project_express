@@ -1,3 +1,5 @@
+// Your main file
+
 const ClothingItems = require("../models/clothingItem");
 const {
   INVALID_DATA,
@@ -60,14 +62,12 @@ module.exports.deleteClothingItem = async (req, res) => {
     res.send({ data: item });
   } catch (err) {
     if (err.name === "CastError") {
-      // Invalid ID provided, return a 400 response
       res
         .status(INVALID_DATA)
         .send({ message: "Invalid clothing item ID provided" });
     } else if (err.statusCode === 404) {
       res.status(NOT_FOUND).send({ message: 'ID not found'})
     } else {
-      // Other errors, return a 500 response
       res
         .status(err.statusCode || SERVER_ERROR)
         .send({ message: err.message || "An error has occoured on the Server."});
