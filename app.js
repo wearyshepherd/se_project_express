@@ -14,4 +14,5 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/se_projec
 });
 
 app.listen(port, () => {
+  // console.log(`Server is running on port ${port}`);
 });
