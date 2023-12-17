@@ -21,7 +21,7 @@ jobs:
       id: sprint
       run: echo "SPRINT_NUMBER=$(cat sprint.txt)" >> $GITHUB_ENV
     - name: Set commit message as environment variable
-      run: echo "COMMIT_MESSAGE=${{ github.event.head_commit.message }}" >> $GITHUB_ENV
+      run: echo "COMMIT_MESSAGE=$(git log --format=%B -n 1)" >> $GITHUB_ENV
     - name: Print sprint number
       run: echo "${{ steps.sprint.outputs.SPRINT_NUMBER }}"
 
