@@ -66,4 +66,3 @@ jobs:
       run: npm run start & wait-port -t 30000 localhost:3001
     - name: Run test endpoints
       run: cd tests-13-public && bash ./bin/test-endpoints.sh
-
