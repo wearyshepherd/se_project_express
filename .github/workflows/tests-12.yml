@@ -1,4 +1,4 @@
-name: "Tests Project 12: ${{ github.event.head_commit.message }}"
+run-name: "Tests Project 12: ${{ github.event.head_commit.message }}"
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - '**'
     tags:
       - '**'
+
 
 jobs:
   read_sprint_file:
@@ -15,13 +16,11 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Check if sprint file exists
+    - name: Check if sprint file exist
       run: bash .github/bin/check-sprint.sh
     - name: Get sprint number
       id: sprint
-      run: echo "SPRINT_NUMBER=$(cat sprint.txt)" >> $GITHUB_ENV
-    - name: Print sprint number
-      run: echo "${{ steps.sprint.outputs.SPRINT_NUMBER }}"
+      run: echo "SPRINT_NUMBER=$(cat sprint)" >> $GITHUB_OUTPUT
 
   test_config:
     runs-on: ubuntu-latest
