@@ -15,7 +15,7 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Check if sprint file exist
+    - name: Check if sprint file exists
       run: bash .github/bin/check-sprint.sh
     - name: Get sprint number
       id: sprint
@@ -30,7 +30,7 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Use Node.js 18.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -48,7 +48,7 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Use Node.js 18.x
+    - name: Use Node.js 16.x
       uses: actions/setup-node@v3
       with:
         node-version: 16
@@ -66,3 +66,4 @@ jobs:
       run: npm run start & wait-port -t 30000 localhost:3001
     - name: Run test endpoints
       run: cd tests-13-public && bash ./bin/test-endpoints.sh
+
