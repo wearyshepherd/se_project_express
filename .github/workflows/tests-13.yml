@@ -1,4 +1,4 @@
-name: "Tests Project 13: ${{ github.event.head_commit.message }}"
+run-name: "Tests Project 13: ${{ github.event.head_commit.message }}"
 
 on:
   push:
@@ -6,6 +6,7 @@ on:
       - '**'
     tags:
       - '**'
+
 
 jobs:
   read_sprint_file:
@@ -15,11 +16,11 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Check if sprint file exists
+    - name: Check if sprint file exist
       run: bash .github/bin/check-sprint.sh
     - name: Get sprint number
       id: sprint
-      run: echo "SPRINT_NUMBER=$(cat sprint.txt)" >> $GITHUB_ENV
+      run: echo "SPRINT_NUMBER=$(cat sprint.txt)" >> $GITHUB_OUTPUT
     - name: Print sprint number
       run: echo "${{ steps.sprint.outputs.SPRINT_NUMBER }}"
 
@@ -30,10 +31,10 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18.x
     - name: Get testing lib
       run: set -eu && git clone --depth 1 https://github.com/practicum-com/tests-13-public.git
     - name: Installing Dependencies
@@ -48,10 +49,10 @@ jobs:
     steps:
     - name: Set up GitHub Actions
       uses: actions/checkout@v2
-    - name: Use Node.js 16.x
-      uses: actions/setup-node@v3
+    - name: Use Node.js 18.x
+      uses: actions/setup-node@v1
       with:
-        node-version: 16
+        node-version: 18.x
     - name: Start MongoDB
       uses: supercharge/mongodb-github-action@1.6.0
       with:
