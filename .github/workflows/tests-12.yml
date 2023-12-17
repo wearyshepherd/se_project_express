@@ -1,4 +1,4 @@
-name: "Tests Project 12: ${{ env.COMMIT_MESSAGE }}"
+name: "Tests Project 12: ${{ github.run_number }}"
 
 on:
   push:
@@ -20,8 +20,6 @@ jobs:
     - name: Get sprint number
       id: sprint
       run: echo "SPRINT_NUMBER=$(cat sprint.txt)" >> $GITHUB_ENV
-    - name: Set commit message as environment variable
-      run: echo "COMMIT_MESSAGE=$(git log --format=%B -n 1)" >> $GITHUB_ENV
     - name: Print sprint number
       run: echo "${{ steps.sprint.outputs.SPRINT_NUMBER }}"
 
