@@ -67,3 +67,4 @@ jobs:
     - name: Run test endpoints
       run: cd tests-12-public && bash ./bin/test-endpoints.sh
 
+
