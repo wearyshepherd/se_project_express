@@ -22,5 +22,5 @@ app.post('/signin', login);
 app.use(routes);
 
 app.listen(PORT, () => {
-  // Removed console.log statement
+  console.log(`App listening at port ${PORT}`);
 });
