@@ -4,7 +4,7 @@ const { ForbiddenError } = require("../utils/errors/ForbiddenError");
 const { NotFoundError } = require("../utils/errors/NotFoundError");
 const { ConflictError } = require("../utils/errors/ConflictError");
 
-const errorHandler = (err, req, res) => {
+const errorHandler = (err, req, res, next) => {
   let statusCode = 500;
   let message = "Internal Server Error";
 
@@ -26,6 +26,7 @@ const errorHandler = (err, req, res) => {
   }
 
   res.status(statusCode).json({ error: message });
+  next();
 };
 
 module.exports = errorHandler;
