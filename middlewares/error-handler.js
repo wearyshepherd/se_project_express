@@ -1,14 +1,10 @@
-const {
-  BadRequestError,
-  UnauthorizedError,
-  ForbiddenError,
-  NotFoundError,
-  ConflictError,
-} = require("./custom-errors");
+const { BadRequestError } = require("../utils/errors/BadRequestError");
+const { UnauthorizedError } = require("../utils/errors/UnauthorizedError");
+const { ForbiddenError } = require("../utils/errors/ForbiddenError");
+const { NotFoundError } = require("../utils/errors/NotFoundError");
+const { ConflictError } = require("../utils/errors/ConflictError");
 
-const errorHandler = (err, req, res, next) => {
-  console.error("Error:", err);
-
+const errorHandler = (err, req, res) => {
   let statusCode = 500;
   let message = "Internal Server Error";
 
@@ -33,3 +29,4 @@ const errorHandler = (err, req, res, next) => {
 };
 
 module.exports = errorHandler;
+
