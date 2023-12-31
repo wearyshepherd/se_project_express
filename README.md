@@ -43,3 +43,6 @@ This project is the backend for the "WTWR" (What to Wear?) application. It uses 
 LINK to Frontend pages: https://github.com/wearyshepherd/se_project_react.git
 
 Link to Backend: https://github.com/wearyshepherd/se_project_express.git 
+
+www.goldjamaica.com
+
