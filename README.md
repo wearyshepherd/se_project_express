@@ -44,4 +44,4 @@ LINK to Frontend pages: https://github.com/wearyshepherd/se_project_react.git
 
 Link to Backend: https://github.com/wearyshepherd/se_project_express.git 
 
-www.wtwr.goldjamaica.com	
+www.goldjamaica.jumpingcrab.com
