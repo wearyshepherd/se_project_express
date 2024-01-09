@@ -38,10 +38,4 @@ This project is the backend for the "WTWR" (What to Wear?) application. It uses 
 ## Author
 - Carlos Chavez
 
-- https://github.com/wearyshepherd/se_project_react/tree/main
-
-LINK to Frontend pages: https://github.com/wearyshepherd/se_project_react.git
-
-Link to Backend: https://github.com/wearyshepherd/se_project_express.git 
-
-www.goldjamaica.jumpingcrab.com
+- se-project-react.pages.dev
