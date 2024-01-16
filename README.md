@@ -38,4 +38,5 @@ This project is the backend for the "WTWR" (What to Wear?) application. It uses 
 ## Author
 - Carlos Chavez
 
-https://se-project-react.pages.dev
+Link to website: 
+https://se-project-react.pages.dev/
