@@ -39,4 +39,4 @@ This project is the backend for the "WTWR" (What to Wear?) application. It uses 
 - Carlos Chavez
 
 Link to website: 
-https://600f53ff.se-project-react.pages.dev/
+https://se-project-react.pages.dev/
