@@ -78,7 +78,5 @@ This project is the backend for the "WTWR" (What to Wear?) application. It uses 
 
  
 
-Link to website:  
-
-https://se-project-react.pages.dev
+Link to website: https://se-project-react.pages.dev/
 
