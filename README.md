@@ -1,7 +1,84 @@
-# WTWR (What to Wear?): Back End
-In this project, I learned how to operate on the back end of a previous project using Postman, MongoDB, and VSCode.  I created routes for different functions including creating, liking, unliking, deleting, and getting items.  I added error messages depending on the type of error received when running the code.  I check with Postman to make sure everything was running properly when working through errors.  This project helps back end developers understand how requests are sent to a server and what they do if there is an error and how to spot it with programs like Postman and MongoDB. 
-## Link to Domain
+# WTWR Backend 
+
+ 
+
+## Overview 
+
+This project is the backend for the "WTWR" (What to Wear?) application. It uses Express for the server, MongoDB for data storage, and includes security measures with Helmet middleware. 
+
+ 
+
+## Scripts 
+
+- **Start Server**: `npm start` 
+
+- **Development Mode**: `npm run dev` 
+
+- **Linting**: `npm run lint` 
+
+ 
+
+## Technologies 
+
+- **Express.js** 
+
+- **Helmet** 
+
+- **MongoDB** 
+
+- **Mongoose** 
+
+- **Validator** 
+
+ 
+
+## Setup 
+
+1. Clone the repository. 
+
+2. Install dependencies: `npm install`. 
+
+3. Set up MongoDB connection. 
+
+4. Run the server: `npm start` or `npm run dev`. 
+
+ 
+
+## Dependencies 
+
+- **express** 
+
+- **helmet** 
+
+- **mongoose** 
+
+- **validator** 
+
+ 
+
+## Dev Dependencies 
+
+- **eslint** 
+
+- **eslint-config-airbnb-base** 
+
+- **eslint-config-prettier** 
+
+- **eslint-plugin-import** 
+
+- **nodemon** 
+
+- **prettier** 
+
+ 
+
+## Author 
+
+- Carlos Chavez 
+
+ 
+
+Link to website:  
 
 https://se-project-react.pages.dev/ 
-
 
