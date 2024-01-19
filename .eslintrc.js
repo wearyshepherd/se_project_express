@@ -7,7 +7,8 @@ module.exports = {
   extends: ["eslint:recommended", "airbnb-base", "prettier"],
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
+    ecmaVersion: 2021,
+    sourceType: "module", // or "script" based on your project
   },
   rules: {
     "no-underscore-dangle": ["error", { allow: ["_id"] }],
