@@ -1,6 +1,21 @@
-const mongoose = require("mongoose");
+require("dotenv").config();
 
-mongoose.connect(process.env.MONGODB_URI, {
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const validator = require("validator");
+const helmet = require("helmet");
+const { errors } = require("celebrate");
+const { celebrate, Joi } = require("celebrate");
+const routes = require("./routes");
+const { login, createUser } = require("./controllers/users");
+const errorHandler = require("./middlewares/error-handler");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
+
+const app = express();
+const { PORT = 3001, MONGODB_URI } = process.env;
+
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
