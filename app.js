@@ -4,7 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const validator = require("validator");
-const helmet = require("helmet"); // Added helmet for security
+const helmet = require("helmet");
 const { errors } = require("celebrate");
 const { celebrate, Joi } = require("celebrate");
 const routes = require("./routes");
@@ -13,7 +13,7 @@ const errorHandler = require("./middlewares/error-handler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-const { PORT = 3001, MONGODB_URI } = process.env; // Added MONGODB_URI for MongoDB connection
+const { PORT = 3001, MONGODB_URI } = process.env;
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
@@ -30,7 +30,7 @@ mongoose.connect(MONGODB_URI, {
 
 app.use(cors());
 app.use(express.json());
-app.use(helmet()); // Added helmet middleware
+app.use(helmet());
 
 app.get("/crash-test", () => {
   setTimeout(() => {
@@ -39,7 +39,7 @@ app.get("/crash-test", () => {
 });
 
 const signupValidation = celebrate({
-  body: Joi.object().keys({
+  body: Joi.object({
     name: Joi.string().required().min(2).max(30),
     avatar: Joi.string()
       .required()
@@ -55,7 +55,7 @@ const signupValidation = celebrate({
 });
 
 const signinValidation = celebrate({
-  body: Joi.object().keys({
+  body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
