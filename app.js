@@ -3,8 +3,8 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const helmet = require("helmet");
 const validator = require("validator");
+const helmet = require("helmet"); // Added helmet for security
 const { errors } = require("celebrate");
 const { celebrate, Joi } = require("celebrate");
 const routes = require("./routes");
@@ -13,29 +13,30 @@ const errorHandler = require("./middlewares/error-handler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-const { PORT = 3001, MONGODB_URI } = process.env;
+const { PORT = 3001, MONGODB_URI } = process.env; // Added MONGODB_URI for MongoDB connection
 
-// MongoDB connection with deprecation warnings addressed
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+})
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
 
 app.use(cors());
-
-// Security headers with Helmet
-app.use(helmet());
-
 app.use(express.json());
+app.use(helmet()); // Added helmet middleware
 
 app.get("/crash-test", () => {
   setTimeout(() => {
     throw new Error("Server will crash now");
   }, 0);
 });
-
-const corsOptions = {
-  origin: 'https://se-project-react.pages.dev',
-};
-
-app.use(cors(corsOptions));
 
 const signupValidation = celebrate({
   body: Joi.object().keys({
