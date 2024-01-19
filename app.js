@@ -4,7 +4,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const validator = require("validator");
-const helmet = require("helmet");
 const { errors } = require("celebrate");
 const { celebrate, Joi } = require("celebrate");
 const routes = require("./routes");
@@ -13,30 +12,16 @@ const errorHandler = require("./middlewares/error-handler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-const { PORT = 3001, MONGODB_URI } = process.env;
+const { PORT = 3001 } = process.env;
 
-// Check if MONGODB_URI is undefined
-if (!MONGODB_URI) {
-  console.error("MongoDB connection URI is not defined in the .env file");
-  process.exit(1); // Exit the process
-}
-
-mongoose.connect(MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-})
-  .then(() => {
-    console.log("MongoDB connected successfully");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
+mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db", (e) => {
+  if (e) {
+    // console.error("DB error", e);
+  }
+});
 
 app.use(cors());
 app.use(express.json());
-app.use(helmet());
 
 app.get("/crash-test", () => {
   setTimeout(() => {
@@ -44,9 +29,8 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
-// Validation middleware
 const signupValidation = celebrate({
-  body: Joi.object({
+  body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
     avatar: Joi.string()
       .required()
@@ -62,30 +46,25 @@ const signupValidation = celebrate({
 });
 
 const signinValidation = celebrate({
-  body: Joi.object({
+  body: Joi.object().keys({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 });
 
-// Logger middleware
 app.use(requestLogger);
 
-// Routes
 app.post("/signup", signupValidation, createUser);
 app.post("/signin", signinValidation, login);
+
 app.use(routes);
 
-// Error logger middleware
 app.use(errorLogger);
 
-// Celebrate middleware for handling validation errors
 app.use(errors());
 
-// Generic error handler middleware
 app.use(errorHandler);
 
-// Start the server
 app.listen(PORT, () => {
-  console.log(`App listening at port ${PORT}`);
+  // console.log(`App listening at port ${PORT}`);
 });
