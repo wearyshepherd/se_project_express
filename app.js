@@ -15,7 +15,12 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
-// Connect to MongoDB
+// Check if MONGODB_URI is undefined
+if (!MONGODB_URI) {
+  console.error("MongoDB connection URI is not defined in the .env file");
+  process.exit(1); // Exit the process
+}
+
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
