@@ -15,6 +15,8 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
+console.log("MONGODB_URI:", MONGODB_URI); // Add this line to check the value
+
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
