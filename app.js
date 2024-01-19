@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const helmet = require("helmet");
 const validator = require("validator");
 const { errors } = require("celebrate");
 const { celebrate, Joi } = require("celebrate");
@@ -12,15 +13,16 @@ const errorHandler = require("./middlewares/error-handler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, MONGODB_URI } = process.env;
 
-mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db", (e) => {
-  if (e) {
-    // console.error("DB error", e);
-  }
-});
+// MongoDB connection with deprecation warnings addressed
+mongoose.connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(cors());
+
+// Security headers with Helmet
+app.use(helmet());
+
 app.use(express.json());
 
 app.get("/crash-test", () => {
@@ -28,6 +30,12 @@ app.get("/crash-test", () => {
     throw new Error("Server will crash now");
   }, 0);
 });
+
+const corsOptions = {
+  origin: 'https://se-project-react.pages.dev',
+};
+
+app.use(cors(corsOptions));
 
 const signupValidation = celebrate({
   body: Joi.object().keys({
@@ -66,5 +74,5 @@ app.use(errors());
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  // console.log(`App listening at port ${PORT}`);
+  console.log(`App listening at port ${PORT}`);
 });
