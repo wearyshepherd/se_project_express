@@ -15,6 +15,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
+// Connect to MongoDB
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -38,6 +39,7 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
+// Validation middleware
 const signupValidation = celebrate({
   body: Joi.object({
     name: Joi.string().required().min(2).max(30),
@@ -61,19 +63,24 @@ const signinValidation = celebrate({
   }),
 });
 
+// Logger middleware
 app.use(requestLogger);
 
+// Routes
 app.post("/signup", signupValidation, createUser);
 app.post("/signin", signinValidation, login);
-
 app.use(routes);
 
+// Error logger middleware
 app.use(errorLogger);
 
+// Celebrate middleware for handling validation errors
 app.use(errors());
 
+// Generic error handler middleware
 app.use(errorHandler);
 
+// Start the server
 app.listen(PORT, () => {
   console.log(`App listening at port ${PORT}`);
 });
