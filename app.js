@@ -14,6 +14,9 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
+// Log the value of MONGODB_URI
+console.log("MONGODB_URI:", MONGODB_URI);
+
 // MongoDB connection
 mongoose
   .connect(MONGODB_URI, {
