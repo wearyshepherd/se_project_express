@@ -14,7 +14,7 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001 } = process.env;
 
-mongoose.connect("Ymongodb+srv://dannychavez:<Sunnydays13>@cluster0.tpvyd.mongodb.net/?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://dvnnychavez2:Sunnydays13@cluster2.zpsutrc.mongodb.net/?retryWrites=true&w=majority", {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false,
