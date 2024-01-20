@@ -20,7 +20,7 @@ console.log("MONGODB_URI:", MONGODB_URI);
 
 // MongoDB connection
 mongoose
-  .connect(MONGODB_URI, {
+  .connect(MONGODB_URI || "mongodb://localhost:27017/yourdevdatabase", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
