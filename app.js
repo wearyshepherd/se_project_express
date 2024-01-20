@@ -15,6 +15,9 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
+// Suppress the deprecation warning for `strictQuery`
+mongoose.set('strictQuery', false);
+
 // Log the value of MONGODB_URI
 console.log("MONGODB_URI:", MONGODB_URI);
 
@@ -32,6 +35,15 @@ mongoose
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
+
+app.use(cors());
+app.use(express.json());
+
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
 
 // Validation schemas
 const signupValidation = celebrate({
