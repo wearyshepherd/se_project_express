@@ -12,21 +12,22 @@ const errorHandler = require("./middlewares/error-handler");
 const { requestLogger, errorLogger } = require("./middlewares/logger");
 
 const app = express();
-const { PORT = 3001 } = process.env;
+const { PORT = 3001, MONGODB_URI } = process.env;
 
-mongoose.connect("mongodb+srv://dvnnychavez2:Sunnydays13@cluster2.zpsutrc.mongodb.net/?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useFindAndModify: false,
-  useCreateIndex: true,
-})
+// MongoDB connection
+mongoose
+  .connect(MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log("MongoDB connected successfully");
   })
   .catch((error) => {
     console.error("MongoDB connection error:", error);
   });
-
 
 app.use(cors());
 app.use(express.json());
@@ -37,8 +38,9 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
+// Validation schemas
 const signupValidation = celebrate({
-  body: Joi.object().keys({
+  body: Joi.object({
     name: Joi.string().required().min(2).max(30),
     avatar: Joi.string()
       .required()
@@ -54,25 +56,26 @@ const signupValidation = celebrate({
 });
 
 const signinValidation = celebrate({
-  body: Joi.object().keys({
+  body: Joi.object({
     email: Joi.string().email().required(),
     password: Joi.string().required(),
   }),
 });
 
+// Middleware
 app.use(requestLogger);
 
+// Routes
 app.post("/signup", signupValidation, createUser);
 app.post("/signin", signinValidation, login);
 
 app.use(routes);
 
+// Error handling middleware
 app.use(errorLogger);
-
 app.use(errors());
-
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  // console.log(`App listening at port ${PORT}`);
+  console.log(`App listening at port ${PORT}`);
 });
