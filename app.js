@@ -23,8 +23,6 @@ mongoose
   .connect(MONGODB_URI || "mongodb://localhost:27017/yourdevdatabase", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
-    useCreateIndex: true,
   })
   .then(() => {
     console.log("MongoDB connected successfully");
