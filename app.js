@@ -3,7 +3,7 @@ console.log("All Environment Variables:", process.env);
 
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
+const cors = require("cors"); // Import the cors module
 const validator = require("validator");
 const { errors } = require("celebrate");
 const { celebrate, Joi } = require("celebrate");
@@ -21,6 +21,9 @@ mongoose.set('strictQuery', false);
 // Log the value of MONGODB_URI
 console.log("MONGODB_URI:", MONGODB_URI);
 
+// Enable CORS
+app.use(cors());
+
 // MongoDB connection
 mongoose
   .connect(MONGODB_URI || "mongodb://localhost:27017/yourdevdatabase", {
@@ -34,7 +37,6 @@ mongoose
     console.error("MongoDB connection error:", error);
   });
 
-app.use(cors());
 app.use(express.json());
 
 app.get("/crash-test", () => {
