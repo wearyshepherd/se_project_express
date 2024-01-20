@@ -17,6 +17,9 @@ const { PORT = 3001, MONGODB_URI } = process.env;
 // Log the value of MONGODB_URI
 console.log("MONGODB_URI:", MONGODB_URI);
 
+// Log the entire process.env object
+console.log("Environment Variables:", process.env);
+
 // MongoDB connection
 mongoose
   .connect(MONGODB_URI, {
