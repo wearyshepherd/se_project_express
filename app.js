@@ -14,11 +14,19 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001 } = process.env;
 
-mongoose.connect("mongodb://127.0.0.1:27017/wtwr_db", (e) => {
-  if (e) {
-    // console.error("DB error", e);
-  }
-});
+mongoose.connect("Ymongodb+srv://dannychavez:<Sunnydays13>@cluster0.tpvyd.mongodb.net/?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+})
+  .then(() => {
+    console.log("MongoDB connected successfully");
+  })
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
+
 
 app.use(cors());
 app.use(express.json());
