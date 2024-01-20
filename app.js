@@ -1,85 +1,78 @@
-import { checkResponse } from "./api";
+require("dotenv").config();
 
-const authBaseUrl =
-  process.env.NODE_ENV === "production"
-    ? "https://wtwr-api.onrender.com"
-    : "http://localhost:3001";
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const validator = require("validator");
+const { errors } = require("celebrate");
+const { celebrate, Joi } = require("celebrate");
+const routes = require("./routes");
+const { login, createUser } = require("./controllers/users");
+const errorHandler = require("./middlewares/error-handler");
+const { requestLogger, errorLogger } = require("./middlewares/logger");
 
-export const registerUser = ({ email, password, name, avatar }) => {
-  console.log("Registering user:", { email, name, avatar }); // Log input data
-  return fetch(`${authBaseUrl}/signup`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password, name, avatar }),
+const app = express();
+const { PORT = 3001 } = process.env;
+
+mongoose.connect("mongodb+srv://dvnnychavez2:Sunnydays13@cluster2.zpsutrc.mongodb.net/?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false,
+  useCreateIndex: true,
+})
+  .then(() => {
+    console.log("MongoDB connected successfully");
   })
-    .then((res) => {
-      console.log("Response from registerUser:", res);
-      return checkResponse(res);
-    })
-    .then((data) => {
-      console.log("Data from registerUser:", data);
-      return data;
-    });
-};
+  .catch((error) => {
+    console.error("MongoDB connection error:", error);
+  });
 
-export const loginUser = ({ email, password }) => {
-  console.log("Logging in user:", { email }); // Log input data
-  return fetch(`${authBaseUrl}/signin`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email, password }),
-  })
-    .then((res) => {
-      console.log("Response from loginUser:", res);
-      return checkResponse(res);
-    })
-    .then((data) => {
-      console.log("Data from loginUser:", data);
-      return data;
-    });
-};
 
-export const getUserInfo = (token) => {
-  console.log("Fetching user info with token:", token); // Log input data
-  return fetch(`${authBaseUrl}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((res) => {
-      console.log("Response from getUserInfo:", res);
-      return checkResponse(res);
-    })
-    .then((data) => {
-      console.log("Data from getUserInfo:", data);
-      return data;
-    });
-};
+app.use(cors());
+app.use(express.json());
 
-export const editProfile = (name, avatar, token) => {
-  console.log("Editing user profile:", { name, avatar, token }); // Log input data
-  return fetch(`${authBaseUrl}/users/me`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ name, avatar }),
-  })
-    .then((res) => {
-      console.log("Response from editProfile:", res);
-      return checkResponse(res);
-    })
-    .then((data) => {
-      console.log("Data from editProfile:", data);
-      return data;
-    });
-};
+app.get("/crash-test", () => {
+  setTimeout(() => {
+    throw new Error("Server will crash now");
+  }, 0);
+});
+
+const signupValidation = celebrate({
+  body: Joi.object().keys({
+    name: Joi.string().required().min(2).max(30),
+    avatar: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (!validator.isURL(value)) {
+          return helpers.message("Invalid URL format");
+        }
+        return value;
+      }),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+});
+
+const signinValidation = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+});
+
+app.use(requestLogger);
+
+app.post("/signup", signupValidation, createUser);
+app.post("/signin", signinValidation, login);
+
+app.use(routes);
+
+app.use(errorLogger);
+
+app.use(errors());
+
+app.use(errorHandler);
+
+app.listen(PORT, () => {
+  // console.log(`App listening at port ${PORT}`);
+});
