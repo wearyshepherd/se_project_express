@@ -1,4 +1,5 @@
 require("dotenv").config();
+
 console.log("All Environment Variables:", process.env);
 
 const express = require("express");
@@ -15,14 +16,18 @@ const { requestLogger, errorLogger } = require("./middlewares/logger");
 const app = express();
 const { PORT = 3001, MONGODB_URI } = process.env;
 
+// Suppress the deprecation warning for `strictQuery`
 mongoose.set('strictQuery', false);
 
+// Log the value of MONGODB_URI
 console.log("MONGODB_URI:", MONGODB_URI);
 
+// Enable CORS
 app.use(cors());
 
+// MongoDB connection
 mongoose
-  .connect(MONGODB_URI || "mongodb://localhost:27017/yourdevdatabase", {
+  .connect(MONGODB_URI || "mongodb+srv://dvnnychavez2:Sunnydays13@cluster2.zpsutrc.mongodb.net/?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -41,21 +46,40 @@ app.get("/crash-test", () => {
   }, 0);
 });
 
+// Validation schemas
 const signupValidation = celebrate({
-  // ... your existing validation schema
+  body: Joi.object({
+    name: Joi.string().required().min(2).max(30),
+    avatar: Joi.string()
+      .required()
+      .custom((value, helpers) => {
+        if (!validator.isURL(value)) {
+          return helpers.message("Invalid URL format");
+        }
+        return value;
+      }),
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
 });
 
 const signinValidation = celebrate({
-  // ... your existing validation schema
+  body: Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
 });
 
+// Middleware
 app.use(requestLogger);
 
+// Routes
 app.post("/signup", signupValidation, createUser);
 app.post("/signin", signinValidation, login);
 
 app.use(routes);
 
+// Error handling middleware
 app.use(errorLogger);
 app.use(errors());
 app.use(errorHandler);
