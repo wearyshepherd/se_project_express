@@ -27,7 +27,7 @@ app.use(cors());
 
 // MongoDB connection
 mongoose
-  .connect(MONGODB_URI || "mongodb+srv://dvnnychavez2:Sunnydays13@cluster2.zpsutrc.mongodb.net/?retryWrites=true&w=majority", {
+  .connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
